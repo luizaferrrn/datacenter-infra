@@ -1,7 +1,9 @@
 // Contratos de persistencia. Los endpoints solo conocen estas interfaces:
-// hoy las implementa el almacén simulado; después Redis (borradores) y PostgreSQL (envíos).
 import type { BorradorDatos, DatosFormulario } from "./formulario";
+import { leerConfig } from "./config";
 import { crearAlmacenesSimulados } from "./almacen-simulado";
+import { AlmacenRedisBorradores } from "./almacen-redis";
+import { AlmacenPostgresEnvios } from "./almacen-postgres";
 
 export const TTL_BORRADOR_SEGUNDOS = 7 * 24 * 60 * 60; // 604800, docs/schema-data.md
 
@@ -32,6 +34,18 @@ export interface AlmacenEnvios {
 export type Almacenes = { borradores: AlmacenBorradores; envios: AlmacenEnvios };
 
 export function obtenerAlmacenes(): Almacenes {
-  // Siguiente etapa: si hay REDIS_SENTINELS / DATABASE_URL, devolver las implementaciones reales.
-  return crearAlmacenesSimulados(TTL_BORRADOR_SEGUNDOS);
+  const config = leerConfig();
+  const simulados = crearAlmacenesSimulados(TTL_BORRADOR_SEGUNDOS);
+
+  // Seleccionamos Redis si el modo no es simulado, de lo contrario usamos memoria
+  const borradores = config.redis.modo !== "simulado" 
+    ? new AlmacenRedisBorradores() 
+    : simulados.borradores;
+
+  // Seleccionamos PostgreSQL si el modo es "real", de lo contrario usamos memoria
+  const envios = config.postgres.modo === "real" 
+    ? new AlmacenPostgresEnvios() 
+    : simulados.envios;
+
+  return { borradores, envios };
 }
