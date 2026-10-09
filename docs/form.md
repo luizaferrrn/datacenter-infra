@@ -3,7 +3,7 @@
 | Campo | Clave técnica | Tipo | Obligatorio | Validación |
 |---|---|---|---|---|
 | Nombre completo | nombre | texto | Sí | 3 a 100 caracteres |
-| Correo electrónico | correo | email | Sí | Formato de correo válido |
+| Correo electrónico | correo | email | Sí | Formato de correo válido | Máximo de 254 caracteres|
 | Tipo de problema | tipo_problema | lista | Sí | Una de: software, hardware, red, otro |
 | Prioridad | prioridad | lista | Sí | Una de: baja, media, alta |
 | Descripción del problema | descripcion | texto largo | Sí | 10 a 1000 caracteres |
