@@ -12,7 +12,7 @@ Regla del proyecto: no se usa `latest`. Cada imagen lleva una versión fija.
 | Componente | Función | Imagen Docker | Versión fija | Etiqueta verificada en el registro | Notas |
 |---|---|---|---|---|---|
 | Aplicación | Formulario Next.js | formulario-app (propia) | 1.0.0 | N/A | Base node:22-alpine |
-| PostgreSQL + Patroni | Base de datos con failover | formulario-patroni (propia) | Patroni 4.1.3; PostgreSQL PostgreSQL 17.11 (número exacto) | [ ] | Dos nodos |
+| PostgreSQL + Patroni | Base de datos con failover | formulario-patroni (propia) | Patroni 4.1.3; imagen base PostgreSQL 17.11 (número exacto) | [ ] | Dos nodos |
 | etcd | Consenso para Patroni | quay.io/coreos/etcd | v3.6.11 | [ x] | Tres nodos |
 | HAProxy | Enruta al líder de PostgreSQL | haproxy | por confirmar | [ ] | |
 | Redis | Borradores | redis | 8.2.10 () | [x] | Versión de soporte extendido |
