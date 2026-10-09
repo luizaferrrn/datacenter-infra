@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Necesario para el Dockerfile (imagen standalone). Acordado en el plan.
+  output: "standalone",
   experimental: {
     agentFeedback: true,
   },
